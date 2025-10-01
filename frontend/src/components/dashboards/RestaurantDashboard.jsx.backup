@@ -1,0 +1,334 @@
+import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card'
+import { Button } from '../ui/button'
+import { Badge } from '../ui/badge'
+import { Progress } from '../ui/progress'
+import { useAuth } from '../../AuthContext'
+import { apiGet } from '../../api'
+import { formatRupiah, formatDateIndonesia } from '../../utils/formatters'
+import {
+  Utensils, Coffee, Clock, TrendingUp, Users, Package,
+  CheckCircle, AlertCircle, Timer, ChefHat, Truck,
+  Loader2, Fire, Star, Receipt
+} from 'lucide-react'
+
+export default function RestaurantDashboard() {
+  const { token } = useAuth()
+  const [isLoading, setIsLoading] = useState(true)
+  const [todayStats, setTodayStats] = useState(null)
+  const [activeOrders, setActiveOrders] = useState([])
+  const [kitchenQueue, setKitchenQueue] = useState([])
+  const [popularItems, setPopularItems] = useState([])
+
+  useEffect(() => {
+    loadDashboardData()
+  }, [])
+
+  async function loadDashboardData() {
+    try {
+      // Mock data for demonstration
+      setTodayStats({
+        totalOrders: 47,
+        revenue: 1250000,
+        dinein: 28,
+        takeaway: 19,
+        avgOrderValue: 26595,
+        kitchenTime: 18
+      })
+
+      setActiveOrders([
+        { id: 'ORD-001', table: 'Table 5', items: 3, status: 'cooking', orderTime: '14:30', customer: 'Dine-in' },
+        { id: 'ORD-002', table: 'Takeaway', items: 2, status: 'ready', orderTime: '14:25', customer: 'Budi S.' },
+        { id: 'ORD-003', table: 'Table 12', items: 4, status: 'pending', orderTime: '14:35', customer: 'Dine-in' },
+        { id: 'ORD-004', table: 'Delivery', items: 2, status: 'cooking', orderTime: '14:28', customer: 'Ani W.' }
+      ])
+
+      setKitchenQueue([
+        { id: 1, item: 'Nasi Goreng Spesial', table: 'Table 5', time: 8, priority: 'normal' },
+        { id: 2, item: 'Ayam Bakar', table: 'Table 12', time: 15, priority: 'urgent' },
+        { id: 3, item: 'Es Teh Manis', table: 'Takeaway', time: 2, priority: 'normal' },
+        { id: 4, item: 'Gado-gado', table: 'Delivery', time: 12, priority: 'normal' }
+      ])
+
+      setPopularItems([
+        { name: 'Nasi Goreng Spesial', sold: 12, revenue: 180000 },
+        { name: 'Ayam Bakar', sold: 8, revenue: 160000 },
+        { name: 'Es Teh Manis', sold: 25, revenue: 125000 },
+        { name: 'Gado-gado', sold: 6, revenue: 90000 }
+      ])
+
+      setIsLoading(false)
+    } catch (error) {
+      console.error('Failed to load dashboard data:', error)
+      setIsLoading(false)
+    }
+  }
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    )
+  }
+
+  const getOrderStatusColor = (status) => {
+    switch (status) {
+      case 'pending': return 'bg-yellow-100 text-yellow-800 border-yellow-200'
+      case 'cooking': return 'bg-orange-100 text-orange-800 border-orange-200'
+      case 'ready': return 'bg-green-100 text-green-800 border-green-200'
+      default: return 'bg-gray-100 text-gray-800 border-gray-200'
+    }
+  }
+
+  return (
+    <div className="space-y-6 bg-gradient-to-br from-orange-50 to-red-50 min-h-screen p-6">
+      {/* Header Restaurant Style */}
+      <div className="relative overflow-hidden bg-gradient-to-r from-orange-600 to-red-600 rounded-xl p-6 text-white">
+        <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full -translate-y-20 translate-x-20" />
+        <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full translate-y-16 -translate-x-16" />
+        <div className="absolute top-1/2 right-1/4 w-6 h-6 bg-white/20 rounded-full" />
+        <div className="absolute top-1/4 right-1/3 w-4 h-4 bg-white/20 rounded-full" />
+
+        <div className="relative z-10">
+          <div className="flex items-center gap-4 mb-4">
+            <div className="p-3 bg-white/20 rounded-lg">
+              <ChefHat className="h-8 w-8" />
+            </div>
+            <div>
+              <h1 className="text-3xl font-bold">Restaurant Dashboard</h1>
+              <p className="text-orange-100">Kelola restoran dan dapur dengan efisien</p>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mt-6">
+            <div className="bg-white/20 rounded-lg p-4">
+              <div className="flex items-center gap-2">
+                <Receipt className="h-5 w-5" />
+                <span className="text-sm">Total Orders</span>
+              </div>
+              <div className="text-2xl font-bold mt-1">{todayStats.totalOrders}</div>
+            </div>
+            <div className="bg-white/20 rounded-lg p-4">
+              <div className="flex items-center gap-2">
+                <TrendingUp className="h-5 w-5" />
+                <span className="text-sm">Revenue</span>
+              </div>
+              <div className="text-xl font-bold mt-1">{formatRupiah(todayStats.revenue)}</div>
+            </div>
+            <div className="bg-white/20 rounded-lg p-4">
+              <div className="flex items-center gap-2">
+                <Utensils className="h-5 w-5" />
+                <span className="text-sm">Dine-in</span>
+              </div>
+              <div className="text-2xl font-bold mt-1">{todayStats.dinein}</div>
+            </div>
+            <div className="bg-white/20 rounded-lg p-4">
+              <div className="flex items-center gap-2">
+                <Package className="h-5 w-5" />
+                <span className="text-sm">Takeaway</span>
+              </div>
+              <div className="text-2xl font-bold mt-1">{todayStats.takeaway}</div>
+            </div>
+            <div className="bg-white/20 rounded-lg p-4">
+              <div className="flex items-center gap-2">
+                <Coffee className="h-5 w-5" />
+                <span className="text-sm">Avg Order</span>
+              </div>
+              <div className="text-xl font-bold mt-1">{formatRupiah(todayStats.avgOrderValue)}</div>
+            </div>
+            <div className="bg-white/20 rounded-lg p-4">
+              <div className="flex items-center gap-2">
+                <Timer className="h-5 w-5" />
+                <span className="text-sm">Kitchen Time</span>
+              </div>
+              <div className="text-2xl font-bold mt-1">{todayStats.kitchenTime}min</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Active Orders */}
+        <div className="lg:col-span-2">
+          <Card className="border-orange-200 shadow-lg">
+            <CardHeader className="bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-t-lg">
+              <CardTitle className="flex items-center gap-2">
+                <Receipt className="h-5 w-5" />
+                Active Orders
+              </CardTitle>
+              <CardDescription className="text-orange-100">
+                {activeOrders.length} pesanan sedang diproses
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-0">
+              <div className="space-y-2 p-4">
+                {activeOrders.map((order) => (
+                  <div key={order.id} className="flex items-center justify-between p-4 bg-orange-50 rounded-lg border border-orange-100">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
+                        <Utensils className="h-6 w-6 text-orange-600" />
+                      </div>
+                      <div>
+                        <div className="font-medium">{order.id} - {order.table}</div>
+                        <div className="text-sm text-gray-600">{order.items} items • {order.orderTime} • {order.customer}</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Badge className={getOrderStatusColor(order.status)}>
+                        {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+                      </Badge>
+                      <Button size="sm" variant="outline" className="text-orange-600 border-orange-300">
+                        View
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Kitchen Queue */}
+        <div>
+          <Card className="border-red-200 shadow-lg">
+            <CardHeader className="bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-t-lg">
+              <CardTitle className="flex items-center gap-2">
+                <Fire className="h-5 w-5" />
+                Kitchen Queue
+              </CardTitle>
+              <CardDescription className="text-red-100">
+                {kitchenQueue.length} item sedang dimasak
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-4">
+              <div className="space-y-3">
+                {kitchenQueue.map((item) => (
+                  <div key={item.id} className={`p-3 rounded-lg border ${
+                    item.priority === 'urgent' ? 'bg-red-50 border-red-200' : 'bg-gray-50 border-gray-200'
+                  }`}>
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="font-medium text-sm">{item.item}</div>
+                      {item.priority === 'urgent' && (
+                        <Badge variant="destructive" className="text-xs">Urgent</Badge>
+                      )}
+                    </div>
+                    <div className="flex items-center justify-between text-xs text-gray-600">
+                      <span>{item.table}</span>
+                      <span className="flex items-center gap-1">
+                        <Clock className="h-3 w-3" />
+                        {item.time}min
+                      </span>
+                    </div>
+                    <Progress value={(20 - item.time) * 5} className="h-2 mt-2" />
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Popular Items */}
+        <Card className="border-green-200 shadow-lg">
+          <CardHeader className="bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-t-lg">
+            <CardTitle className="flex items-center gap-2">
+              <Star className="h-5 w-5" />
+              Menu Terpopuler Hari Ini
+            </CardTitle>
+            <CardDescription className="text-green-100">
+              Item dengan penjualan tertinggi
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="p-4">
+            <div className="space-y-3">
+              {popularItems.map((item, index) => (
+                <div key={index} className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                      <span className="text-sm font-bold text-green-600">#{index + 1}</span>
+                    </div>
+                    <div>
+                      <div className="font-medium">{item.name}</div>
+                      <div className="text-sm text-gray-600">{item.sold} terjual</div>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="font-medium">{formatRupiah(item.revenue)}</div>
+                    <div className="text-xs text-gray-600">revenue</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Quick Actions */}
+        <Card className="border-blue-200 shadow-lg">
+          <CardHeader className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-t-lg">
+            <CardTitle className="flex items-center gap-2">
+              <Coffee className="h-5 w-5" />
+              Aksi Cepat
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-4">
+            <div className="grid grid-cols-2 gap-3">
+              <Button asChild className="h-16 flex-col gap-1 bg-orange-600 hover:bg-orange-700">
+                <Link to="/cashier">
+                  <Receipt className="h-5 w-5" />
+                  <span className="text-xs">Order Baru</span>
+                </Link>
+              </Button>
+              <Button asChild variant="outline" className="h-16 flex-col gap-1 border-red-200 hover:bg-red-50">
+                <Link to="/service-pos">
+                  <ChefHat className="h-5 w-5" />
+                  <span className="text-xs">Kitchen View</span>
+                </Link>
+              </Button>
+              <Button asChild variant="outline" className="h-16 flex-col gap-1 border-green-200 hover:bg-green-50">
+                <Link to="/inventory">
+                  <Package className="h-5 w-5" />
+                  <span className="text-xs">Menu Items</span>
+                </Link>
+              </Button>
+              <Button asChild variant="outline" className="h-16 flex-col gap-1 border-blue-200 hover:bg-blue-50">
+                <Link to="/reports">
+                  <TrendingUp className="h-5 w-5" />
+                  <span className="text-xs">Laporan</span>
+                </Link>
+              </Button>
+            </div>
+
+            {/* Table Status Preview */}
+            <div className="mt-4 p-3 bg-blue-50 rounded-lg">
+              <div className="text-sm font-medium mb-2">Status Meja</div>
+              <div className="grid grid-cols-4 gap-2">
+                <div className="text-center">
+                  <div className="w-8 h-8 bg-green-500 rounded mx-auto mb-1"></div>
+                  <div className="text-xs">Available</div>
+                  <div className="text-xs font-bold">8</div>
+                </div>
+                <div className="text-center">
+                  <div className="w-8 h-8 bg-red-500 rounded mx-auto mb-1"></div>
+                  <div className="text-xs">Occupied</div>
+                  <div className="text-xs font-bold">5</div>
+                </div>
+                <div className="text-center">
+                  <div className="w-8 h-8 bg-yellow-500 rounded mx-auto mb-1"></div>
+                  <div className="text-xs">Reserved</div>
+                  <div className="text-xs font-bold">2</div>
+                </div>
+                <div className="text-center">
+                  <div className="w-8 h-8 bg-gray-500 rounded mx-auto mb-1"></div>
+                  <div className="text-xs">Cleaning</div>
+                  <div className="text-xs font-bold">1</div>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  )
+}

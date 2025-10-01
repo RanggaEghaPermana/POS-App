@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setup Barbers Data</title>
+</head>
+<body>
+    <h1>Setting up Barber Data...</h1>
+    <script>
+        // Create sample barber data
+        const barbersData = [
+            {
+                id: 1,
+                name: "Dika",
+                specialty: "Classic Cut",
+                hourly_rate: 25000,
+                active: true
+            },
+            {
+                id: 2,
+                name: "Andi",
+                specialty: "Modern Style",
+                hourly_rate: 30000,
+                active: true
+            }
+        ];
+
+        // Save to localStorage
+        localStorage.setItem('barbershop_barbers', JSON.stringify(barbersData));
+
+        // Create a mock shift data as well
+        const shiftData = {
+            id: 1,
+            barber_id: 1,
+            start_time: "09:00:00",
+            end_time: "18:00:00",
+            status: "active",
+            opening_cash: 100000,
+            date: new Date().toISOString().split('T')[0]
+        };
+
+        localStorage.setItem('barbershop_current_shift', JSON.stringify(shiftData));
+
+        document.body.innerHTML += '<p>✅ Barber data saved to localStorage</p>';
+        document.body.innerHTML += '<p>✅ Active shift created</p>';
+        document.body.innerHTML += '<p><a href="http://localhost:5173/cashier">Go to Cashier</a></p>';
+
+        console.log('Barbers saved:', barbersData);
+        console.log('Shift saved:', shiftData);
+    </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test API Sync</title>
+</head>
+<body>
+    <h1>Test API Connection</h1>
+    <button onclick="testAPI()">Test POST /setup/services</button>
+    <pre id="result"></pre>
+
+    <script>
+        async function testAPI() {
+            const resultEl = document.getElementById('result');
+            resultEl.textContent = 'Testing...';
+
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/v1/setup/services', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name: 'Test from HTML',
+                        code: 'HTML-01',
+                        service_category_id: 7,
+                        base_price: '55000',
+                        unit: 'layanan',
+                        pricing_mode: 'fixed'
+                    })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    resultEl.textContent = 'SUCCESS:\n' + JSON.stringify(data, null, 2);
+                } else {
+                    resultEl.textContent = 'ERROR: ' + response.status + ' ' + response.statusText;
+                }
+            } catch (error) {
+                resultEl.textContent = 'FETCH ERROR:\n' + error.message;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\ProductController;
+use App\Http\Controllers\Api\V1\ProductAdminController;
+use App\Http\Controllers\Api\V1\CategoryController;
+use App\Http\Controllers\Api\V1\SaleController as ApiSaleController;
+use App\Http\Controllers\Api\V1\ReturnController as ApiReturnController;
+use App\Http\Controllers\Api\V1\ConfigController;
+use App\Http\Controllers\Api\V1\ReportController;
+use App\Http\Controllers\Api\V1\UserController;
+use App\Http\Controllers\Api\V1\StockCountController;
+use App\Http\Controllers\Api\V1\SupplierController as ApiSupplierController;
+use App\Http\Controllers\Api\V1\SupplierProductController as ApiSupplierProductController;
+use App\Http\Controllers\Api\V1\PayableController as ApiPayableController;
+use App\Http\Controllers\Api\V1\StockTransferController as ApiStockTransferController;
+use App\Http\Controllers\Api\V1\SettingsController as ApiSettingsController;
+use App\Http\Controllers\Api\V1\PricingController as ApiPricingController;
+use App\Http\Controllers\Api\V1\BackupController as ApiBackupController;
+use App\Http\Controllers\Api\V1\LogController as ApiLogController;
+use App\Http\Controllers\Api\V1\BranchController as ApiBranchController;
+use App\Http\Controllers\Api\V1\UserAdminController as ApiUserAdminController;
+// use App\\Http\\Controllers\\Api\\V1\\StaffScheduleController as ApiStaffScheduleController;
+
+Route::prefix('v1')->group(function () {
+    Route::post('auth/login', [AuthController::class, 'login']);
+
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::post('auth/logout', [AuthController::class, 'logout']);
+
+        // Common read access (admin|manager|cashier)
+        Route::middleware(['role:admin|manager|cashier'])->group(function(){
+            Route::get('config', [ConfigController::class, 'show']);
+            Route::get('products', [ProductController::class, 'index']);
+            Route::get('admin/products-low-stock', [ProductAdminController::class, 'lowStock']);
+            // Sales reports summary is available to all roles (cashier restricted server-side)
+            Route::get('reports/sales', [ReportController::class, 'sales']);
+
+            Route::get('sales', [ApiSaleController::class, 'index']);
+            Route::get('sales/by-number', [ApiSaleController::class, 'findByNumber']);
+            Route::get('sales/{id}', [ApiSaleController::class, 'show']);
+        });
+
+        // Cashier operations (admin|manager|cashier)
+        Route::middleware(['role:admin|manager|cashier'])->group(function(){
+            Route::post('checkout', [ApiSaleController::class, 'checkout']);
+            Route::post('returns', [ApiReturnController::class, 'store']);
+        });
+
+        // Manager + Admin operations
+        Route::middleware(['role:admin|manager'])->group(function(){
+            // Branches
+            Route::get('branches', [ApiBranchController::class, 'index']);
+            Route::post('branches', [ApiBranchController::class, 'store']);
+            Route::put('branches/{id}', [ApiBranchController::class, 'update']);
+            Route::delete('branches/{id}', [ApiBranchController::class, 'destroy']);
+
+            // Products & Categories
+            Route::apiResource('categories', CategoryController::class)->only(['index','store','show','update','destroy']);
+            Route::apiResource('admin/products', ProductAdminController::class)->only(['index','store','show','update','destroy']);
+            Route::get('admin/products/{id}/barcode', [ProductAdminController::class, 'barcode']);
+
+            // Suppliers & Payables
+            Route::apiResource('suppliers', ApiSupplierController::class)->only(['index','store','show','update','destroy']);
+            Route::get('suppliers/{supplierId}/products', [ApiSupplierProductController::class, 'index']);
+            Route::post('suppliers/{supplierId}/products', [ApiSupplierProductController::class, 'upsert']);
+            Route::delete('suppliers/{supplierId}/products/{id}', [ApiSupplierProductController::class, 'destroy']);
+            Route::get('payables', [ApiPayableController::class, 'index']);
+            Route::post('payables', [ApiPayableController::class, 'store']);
+            Route::get('payables/{id}', [ApiPayableController::class, 'show']);
+            Route::post('payables/{id}/payments', [ApiPayableController::class, 'addPayment']);
+
+            // Stock Opname
+            Route::get('stock-counts', [StockCountController::class, 'index']);
+            Route::post('stock-counts', [StockCountController::class, 'store']);
+            Route::get('stock-counts/{id}', [StockCountController::class, 'show']);
+            Route::post('stock-counts/{id}/items', [StockCountController::class, 'addItem']);
+            Route::put('stock-counts/{id}/items/{itemId}', [StockCountController::class, 'updateItem']);
+            Route::post('stock-counts/{id}/post', [StockCountController::class, 'post']);
+            Route::post('stock-counts/{id}/seed', [StockCountController::class, 'seed']);
+
+            // Reports (operational)
+            Route::get('reports/sales-daily', [ReportController::class, 'salesDaily']);
+            Route::get('reports/inventory', [ReportController::class, 'inventory']);
+
+            // Cashiers list for filters
+            Route::get('cashiers', [UserController::class, 'cashiers']);
+        });
+
+        // Admin & Manager: user management (with controller-level restrictions for manager)
+        Route::middleware(['role:admin|manager'])->group(function(){
+            // User Management
+            Route::get('admin/users', [ApiUserAdminController::class, 'index']);
+            Route::get('admin/roles', [ApiUserAdminController::class, 'roles']);
+            Route::post('admin/users', [ApiUserAdminController::class, 'store']);
+            Route::post('admin/users/{id}/assign-role', [ApiUserAdminController::class, 'assignRole']);
+            Route::post('admin/users/{id}/password', [ApiUserAdminController::class, 'changePassword']);
+
+            // Staff Schedules (disabled for point 1)
+        });
+
+        // Admin-only operations
+        Route::middleware(['role:admin'])->group(function(){
+            // Settings & Admin
+            
+            // Settings & Admin
+            Route::get('settings', [ApiSettingsController::class, 'show']);
+            Route::put('settings', [ApiSettingsController::class, 'update']);
+            Route::get('pricing/rules', [ApiPricingController::class, 'rulesIndex']);
+            Route::post('pricing/rules', [ApiPricingController::class, 'rulesStore']);
+            Route::put('pricing/rules/{id}', [ApiPricingController::class, 'rulesUpdate']);
+            Route::delete('pricing/rules/{id}', [ApiPricingController::class, 'rulesDestroy']);
+            Route::post('pricing/bulk-update', [ApiPricingController::class, 'bulkUpdate']);
+            Route::get('backups', [ApiBackupController::class, 'index']);
+            Route::post('backups', [ApiBackupController::class, 'create']);
+            Route::get('backups/{id}/download', [ApiBackupController::class, 'download']);
+            Route::post('backups/{id}/restore', [ApiBackupController::class, 'restore']);
+            Route::get('logs/system', [ApiLogController::class, 'system']);
+
+            // Advanced / Financial Reports
+            Route::get('reports/cashflow', [ReportController::class, 'cashflow']);
+            Route::get('reports/profit-loss', [ReportController::class, 'profitLoss']);
+            Route::get('reports/tax', [ReportController::class, 'tax']);
+            
+        });
+    });
+});
+
+
+
+
+
+

@@ -1,0 +1,96 @@
+
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37m/[39m[38;5;103m .................................................................................................. [39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/admin/products[39m[38;5;103m ......................... products.index › Api\V1\ProductAdminController@index[39m
+  [33mPOST[39m            [37mapi/v1/admin/products[39m[38;5;103m ......................... products.store › Api\V1\ProductAdminController@store[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/admin/products-low-stock[39m[38;5;103m ............................. Api\V1\ProductAdminController@lowStock[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/admin/products/[39m[33m{id}[39m[37m/barcode[39m[38;5;103m ........................... Api\V1\ProductAdminController@barcode[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/admin/products/[39m[33m{product}[39m[38;5;103m ................. products.show › Api\V1\ProductAdminController@show[39m
+  [33mPUT[39m[38;5;103m|[39m[33mPATCH[39m       [37mapi/v1/admin/products/[39m[33m{product}[39m[38;5;103m ............. products.update › Api\V1\ProductAdminController@update[39m
+  [31mDELETE[39m          [37mapi/v1/admin/products/[39m[33m{product}[39m[38;5;103m ........... products.destroy › Api\V1\ProductAdminController@destroy[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/admin/roles[39m[38;5;103m ................................................ Api\V1\UserAdminController@roles[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/admin/users[39m[38;5;103m ................................................ Api\V1\UserAdminController@index[39m
+  [33mPOST[39m            [37mapi/v1/admin/users[39m[38;5;103m ................................................ Api\V1\UserAdminController@store[39m
+  [33mPOST[39m            [37mapi/v1/admin/users/[39m[33m{id}[39m[37m/assign-role[39m[38;5;103m .......................... Api\V1\UserAdminController@assignRole[39m
+  [33mPOST[39m            [37mapi/v1/admin/users/[39m[33m{id}[39m[37m/password[39m[38;5;103m ......................... Api\V1\UserAdminController@changePassword[39m
+  [33mPOST[39m            [37mapi/v1/auth/login[39m[38;5;103m ...................................................... Api\V1\AuthController@login[39m
+  [33mPOST[39m            [37mapi/v1/auth/logout[39m[38;5;103m .................................................... Api\V1\AuthController@logout[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/backups[39m[38;5;103m ....................................................... Api\V1\BackupController@index[39m
+  [33mPOST[39m            [37mapi/v1/backups[39m[38;5;103m ...................................................... Api\V1\BackupController@create[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/backups/[39m[33m{id}[39m[37m/download[39m[38;5;103m ...................................... Api\V1\BackupController@download[39m
+  [33mPOST[39m            [37mapi/v1/backups/[39m[33m{id}[39m[37m/restore[39m[38;5;103m ........................................ Api\V1\BackupController@restore[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/branches[39m[38;5;103m ...................................................... Api\V1\BranchController@index[39m
+  [33mPOST[39m            [37mapi/v1/branches[39m[38;5;103m ...................................................... Api\V1\BranchController@store[39m
+  [33mPUT[39m             [37mapi/v1/branches/[39m[33m{id}[39m[38;5;103m ................................................ Api\V1\BranchController@update[39m
+  [31mDELETE[39m          [37mapi/v1/branches/[39m[33m{id}[39m[38;5;103m ............................................... Api\V1\BranchController@destroy[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/business-types[39m[38;5;103m .......................................... Api\V1\BusinessTypeController@index[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/business-types/current[39m[38;5;103m ................. Api\V1\BusinessTypeController@getCurrentBusinessType[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/business-types/[39m[33m{slug}[39m[38;5;103m .................................... Api\V1\BusinessTypeController@show[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/business-types/[39m[33m{slug}[39m[37m/form-fields[39m[38;5;103m ............... Api\V1\BusinessTypeController@getFormFields[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/cashiers[39m[38;5;103m ..................................................... Api\V1\UserController@cashiers[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/categories[39m[38;5;103m ............................... categories.index › Api\V1\CategoryController@index[39m
+  [33mPOST[39m            [37mapi/v1/categories[39m[38;5;103m ............................... categories.store › Api\V1\CategoryController@store[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/categories/[39m[33m{category}[39m[38;5;103m ...................... categories.show › Api\V1\CategoryController@show[39m
+  [33mPUT[39m[38;5;103m|[39m[33mPATCH[39m       [37mapi/v1/categories/[39m[33m{category}[39m[38;5;103m .................. categories.update › Api\V1\CategoryController@update[39m
+  [31mDELETE[39m          [37mapi/v1/categories/[39m[33m{category}[39m[38;5;103m ................ categories.destroy › Api\V1\CategoryController@destroy[39m
+  [33mPOST[39m            [37mapi/v1/checkout[39m[38;5;103m ..................................................... Api\V1\SaleController@checkout[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/config[39m[38;5;103m ......................................................... Api\V1\ConfigController@show[39m
+  [33mPOST[39m            [37mapi/v1/invoices[39m[38;5;103m ..................................................... Api\V1\InvoiceController@store[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/invoices/[39m[33m{id}[39m[38;5;103m ................................................. Api\V1\InvoiceController@show[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/logs/system[39m[38;5;103m ..................................................... Api\V1\LogController@system[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/payables[39m[38;5;103m ..................................................... Api\V1\PayableController@index[39m
+  [33mPOST[39m            [37mapi/v1/payables[39m[38;5;103m ..................................................... Api\V1\PayableController@store[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/payables/[39m[33m{id}[39m[38;5;103m ................................................. Api\V1\PayableController@show[39m
+  [33mPOST[39m            [37mapi/v1/payables/[39m[33m{id}[39m[37m/payments[39m[38;5;103m .................................. Api\V1\PayableController@addPayment[39m
+  [33mPOST[39m            [37mapi/v1/pricing/bulk-preview[39m[38;5;103m ................................... Api\V1\PricingController@bulkPreview[39m
+  [33mPOST[39m            [37mapi/v1/pricing/bulk-update[39m[38;5;103m ..................................... Api\V1\PricingController@bulkUpdate[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/pricing/rules[39m[38;5;103m ........................................... Api\V1\PricingController@rulesIndex[39m
+  [33mPOST[39m            [37mapi/v1/pricing/rules[39m[38;5;103m ........................................... Api\V1\PricingController@rulesStore[39m
+  [33mPUT[39m             [37mapi/v1/pricing/rules/[39m[33m{id}[39m[38;5;103m ..................................... Api\V1\PricingController@rulesUpdate[39m
+  [31mDELETE[39m          [37mapi/v1/pricing/rules/[39m[33m{id}[39m[38;5;103m .................................... Api\V1\PricingController@rulesDestroy[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/pricing/test[39m[38;5;103m ........................................... Api\V1\PricingController@testPricing[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/products[39m[38;5;103m ..................................................... Api\V1\ProductController@index[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/reports/cashflow[39m[38;5;103m ........................................... Api\V1\ReportController@cashflow[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/reports/inventory[39m[38;5;103m ......................................... Api\V1\ReportController@inventory[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/reports/profit-loss[39m[38;5;103m ...................................... Api\V1\ReportController@profitLoss[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/reports/sales[39m[38;5;103m ................................................. Api\V1\ReportController@sales[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/reports/sales-daily[39m[38;5;103m ...................................... Api\V1\ReportController@salesDaily[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/reports/tax[39m[38;5;103m ..................................................... Api\V1\ReportController@tax[39m
+  [33mPOST[39m            [37mapi/v1/returns[39m[38;5;103m ....................................................... Api\V1\ReturnController@store[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/sales[39m[38;5;103m ........................................................... Api\V1\SaleController@index[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/sales/by-number[39m[38;5;103m .......................................... Api\V1\SaleController@findByNumber[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/sales/[39m[33m{id}[39m[38;5;103m ....................................................... Api\V1\SaleController@show[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/service-categories[39m[38;5;103m ................................... Api\V1\ServiceCategoryController@index[39m
+  [33mPOST[39m            [37mapi/v1/service-categories[39m[38;5;103m ........ service-categories.store › Api\V1\ServiceCategoryController@store[39m
+  [33mPUT[39m[38;5;103m|[39m[33mPATCH[39m       [37mapi/v1/service-categories/[39m[33m{service_category}[39m[38;5;103m service-categories.update › Api\V1\ServiceCategoryCont…[39m
+  [31mDELETE[39m          [37mapi/v1/service-categories/[39m[33m{service_category}[39m[38;5;103m service-categories.destroy › Api\V1\ServiceCategoryCon…[39m
+  [33mPOST[39m            [37mapi/v1/service-checkout[39m[38;5;103m .................................. Api\V1\ServiceCheckoutController@checkout[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/services[39m[38;5;103m ..................................................... Api\V1\ServiceController@index[39m
+  [33mPOST[39m            [37mapi/v1/services[39m[38;5;103m .................................... services.store › Api\V1\ServiceController@store[39m
+  [33mPOST[39m            [37mapi/v1/services/bulk-pricing[39m[38;5;103m .................................. Api\V1\ServiceController@bulkPricing[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/services/[39m[33m{service}[39m[38;5;103m ............................................ Api\V1\ServiceController@show[39m
+  [33mPUT[39m[38;5;103m|[39m[33mPATCH[39m       [37mapi/v1/services/[39m[33m{service}[39m[38;5;103m ........................ services.update › Api\V1\ServiceController@update[39m
+  [31mDELETE[39m          [37mapi/v1/services/[39m[33m{service}[39m[38;5;103m ...................... services.destroy › Api\V1\ServiceController@destroy[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/settings[39m[38;5;103m ..................................................... Api\V1\SettingsController@show[39m
+  [33mPUT[39m             [37mapi/v1/settings[39m[38;5;103m ................................................... Api\V1\SettingsController@update[39m
+  [33mPOST[39m            [37mapi/v1/settings/fx-sync[39m[38;5;103m ........................................... Api\V1\SettingsController@fxSync[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/stock-counts[39m[38;5;103m .............................................. Api\V1\StockCountController@index[39m
+  [33mPOST[39m            [37mapi/v1/stock-counts[39m[38;5;103m .............................................. Api\V1\StockCountController@store[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/stock-counts/[39m[33m{id}[39m[38;5;103m .......................................... Api\V1\StockCountController@show[39m
+  [33mPOST[39m            [37mapi/v1/stock-counts/[39m[33m{id}[39m[37m/items[39m[38;5;103m ................................. Api\V1\StockCountController@addItem[39m
+  [33mPUT[39m             [37mapi/v1/stock-counts/[39m[33m{id}[39m[37m/items/[39m[33m{itemId}[39m[38;5;103m ..................... Api\V1\StockCountController@updateItem[39m
+  [33mPOST[39m            [37mapi/v1/stock-counts/[39m[33m{id}[39m[37m/post[39m[38;5;103m ..................................... Api\V1\StockCountController@post[39m
+  [33mPOST[39m            [37mapi/v1/stock-counts/[39m[33m{id}[39m[37m/seed[39m[38;5;103m ..................................... Api\V1\StockCountController@seed[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/suppliers[39m[38;5;103m ................................. suppliers.index › Api\V1\SupplierController@index[39m
+  [33mPOST[39m            [37mapi/v1/suppliers[39m[38;5;103m ................................. suppliers.store › Api\V1\SupplierController@store[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/suppliers/[39m[33m{supplierId}[39m[37m/products[39m[38;5;103m ...................... Api\V1\SupplierProductController@index[39m
+  [33mPOST[39m            [37mapi/v1/suppliers/[39m[33m{supplierId}[39m[37m/products[39m[38;5;103m ..................... Api\V1\SupplierProductController@upsert[39m
+  [31mDELETE[39m          [37mapi/v1/suppliers/[39m[33m{supplierId}[39m[37m/products/[39m[33m{id}[39m[38;5;103m ............... Api\V1\SupplierProductController@destroy[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mapi/v1/suppliers/[39m[33m{supplier}[39m[38;5;103m ........................ suppliers.show › Api\V1\SupplierController@show[39m
+  [33mPUT[39m[38;5;103m|[39m[33mPATCH[39m       [37mapi/v1/suppliers/[39m[33m{supplier}[39m[38;5;103m .................... suppliers.update › Api\V1\SupplierController@update[39m
+  [31mDELETE[39m          [37mapi/v1/suppliers/[39m[33m{supplier}[39m[38;5;103m .................. suppliers.destroy › Api\V1\SupplierController@destroy[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37msanctum/csrf-cookie[39m[38;5;103m .............. sanctum.csrf-cookie › Laravel\Sanctum › CsrfCookieController@show[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mstorage/[39m[33m{path}[39m[38;5;103m ....................................................................... storage.local[39m
+  [34mGET[39m[38;5;103m|[39m[38;5;103mHEAD[39m        [37mup[39m[38;5;103m ................................................................................................. [39m
+
+                                                                                                   [34;1mShowing [92] routes[39;22m
+
